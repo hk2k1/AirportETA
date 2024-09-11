@@ -1,0 +1,127 @@
+/airport-eta-supabase-template
+airport-eta-supabase-template/
+/airport-eta-supabase-template/
+
+# gitignore from nextjs
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Misc
+*.swp
+*.bak
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### airport-eta ###
+
+# Ignores for airport-eta directory
+/airport-eta/.dist
+/airport-eta/node_modules
+
+# next.js
+/airport-eta/.next/
+/airport-eta/out/
+
+# production
+/airport-eta/build
+
+# local env files
+.env*.local
+/airport-eta/.env
+
+# dependencies
+/airport-eta/.pnp
+/airport-eta/.pnp
+.pnp.js
+/airport-eta/node_modules
+
+# testing
+/airport-eta/coverage
+
+# next.js
+/airport-eta/.next/
+/airport-eta/out/
+
+# production
+/airport-eta/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Do not ignore these files
+!/airport-eta/.eslintrc.json
+!/airport-eta/next.config.mjs
+!/airport-eta/package-lock.json
+!/airport-eta/package.json
+!/airport-eta/postcss.config.mjs
+!/airport-eta/README.md
+!/airport-eta/tailwind.config.ts
+!/airport-eta/tsconfig.json

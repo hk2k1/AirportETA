@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site"
 import { ThemeProvider } from "@/components/Providers/theme-provider"
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 
-const Mont = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
+const Mont = Roboto_Mono({ weight: '400', subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {
@@ -27,10 +28,10 @@ export const metadata: Metadata = {
     },
   ],
   creator: "Harsha",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  // themeColor: [
+  //   { media: "(prefers-color-scheme: light)", color: "white" },
+  //   { media: "(prefers-color-scheme: dark)", color: "black" },
+  // ],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -53,16 +54,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          Mont.variable,
-          Mont.className
+          "min-h-screen bg-background antialiased",
+          Mont.className,
+          Mont.variable
         )}
       >
         <NextTopLoader color="#2299DD" easing="ease" showSpinner={false} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Toaster position="bottom-center" reverseOrder={false} />
           {children}
         </ThemeProvider>
       </body>

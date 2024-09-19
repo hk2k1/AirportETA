@@ -8,6 +8,6 @@ export const siteConfig = {
   ogImage: "https://www.shutterstock.com/image-vector/airport-transfer-icon-line-isolated-600nw-1240237735.jpg",
   links: {
     twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/hk2k1/AirportETA",
+    github: "https://github.com",
   },
 }

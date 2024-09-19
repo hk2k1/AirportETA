@@ -1,47 +1,49 @@
-import { EmptyPlaceholder } from "@/components/Dashboard/empty-placeholder"
-import { DashboardHeader } from "@/components/Dashboard/header"
-import { PostCreateButton } from "@/components/Dashboard/post-create-button"
-// import { PostItem } from "@/components/post-item"
-import { DashboardShell } from "@/components/Dashboard/shell"
-// import { createServerSupabaseClient } from "@/app/supabase-server"
-import { createClient } from "@/utils/supabase/client";
+import PageContainer from "@/components/Dashboard/page-container";
+// import { DataTable } from "@/components/tables/flight-tables/data-table";
+// import { Suspense } from "react";
+// import { getFlightLogs } from "@/lib/actions/flightlog.action";
+// import { columns } from "@/components/tables/flight-tables/columns";
+import { Breadcrumbs } from "@/components/Dashboard/breadcrumbs";
+// import { Heading } from "@/components/ui/heading";
+import { Separator } from "@/components/ui/separator";
+// import { CreateFlightLogDialog } from "@/components/forms/CreateFlightLogDialog";
+import { Toaster } from "sonner";
 
-export const metadata = {
-  title: "Dashboard",
-}
+const breadcrumbItems = [{ title: "Dashboard", link: "/dashboard" }];
 
-
-export default async function DashboardPage() {
-  const supabase = createClient();
-
-  const { data: posts } = await supabase
-    .from("posts")
-    .select("id, title, published, created_at")
-    .order("updated_at", { ascending: false })
+export default async function Dashboard() {
+//   const user = await auth();
+//   const { flightLogs, totalCount } = await getFlightLogs();
 
   return (
-    <DashboardShell>
-      <DashboardHeader heading="Posts" text="Create and manage posts.">
-        <PostCreateButton />
-      </DashboardHeader>
-      <div>
-        {posts?.length ? (
-          <div className="divide-y divide-border rounded-md border">
-            {/* {posts.map((post) => (
-              <PostItem key={post.id} post={post} />
-            ))} */}
-          </div>
-        ) : (
-          <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>No posts created</EmptyPlaceholder.Title>
-            <EmptyPlaceholder.Description>
-              You don&apos;t have any posts yet. Start creating content.
-            </EmptyPlaceholder.Description>
-            <PostCreateButton variant="outline" />
-          </EmptyPlaceholder>
-        )}
+    <PageContainer scrollable={true}>
+      <Toaster />
+      <div className="space-y-6">
+        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+          <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+            {/* Welcome, {user?.user?.name ?? "Pilot"}! 👋 */}
+            Welcome 👋
+          </h2>
+          {/* <CreateFlightLogDialog /> */}
+        </div>
+
+        <Separator className="my-6" />
+
+        <div className="hidden md:block">
+          <Breadcrumbs items={breadcrumbItems} />
+        </div>
+
+        {/* <div className="space-y-4">
+          <Heading
+            title={`Flight Logs (${totalCount})`}
+            description="Manage your flight logs efficiently"
+          />
+
+          <Suspense fallback={<div>Loading flight logs...</div>}>
+            <DataTable columns={columns} data={flightLogs} />
+          </Suspense>
+        </div> */}
       </div>
-    </DashboardShell>
-  )
+    </PageContainer>
+  );
 }

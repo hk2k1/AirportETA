@@ -1,7 +1,7 @@
 // import { SiteConfig } from "types"
 
 export const siteConfig = {
-  name: "AirportETA",
+  name: "AirportTaxiETA",
   description:
     "Airport ETA Proof of Concept Application for predicting taxi waiting times for CAG by NCS.",
   url: "https://google.com",

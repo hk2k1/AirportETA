@@ -23,6 +23,13 @@ import {
     Twitter,
     User,
     X,
+    Home,
+    CarTaxiFront,
+    PencilLine,
+    Contact,
+    ChartPie,
+    BadgeInfo,
+    LogOut,
     type Icon as LucideIcon,
   } from "lucide-react"
   
@@ -50,6 +57,13 @@ import {
     sun: SunMedium,
     moon: Moon,
     laptop: Laptop,
+    home: Home,
+    taxi: CarTaxiFront,
+    actions: PencilLine,
+    contacts: Contact,
+    reports: ChartPie,
+    info: BadgeInfo,
+    logout: LogOut,
     gitHub: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

@@ -15,19 +15,44 @@ export const dashboardConfig: DashboardConfig = {
   ],
   sidebarNav: [
     {
-      title: "Posts",
+      title: "Overview",
       href: "/dashboard",
-      icon: "post",
+      icon: "home",
     },
     {
-      title: "Billing",
-      href: "/dashboard/billing",
-      icon: "billing",
+      title: "Taxi Maps",
+      href: "/dashboard/taxi",
+      icon: "taxi",
     },
     {
-      title: "Settings",
-      href: "/dashboard/settings",
+      title: "Dashboard Settings",
+      href: "/dashboard/dashsettings",
       icon: "settings",
+    },
+    {
+      title: "Actions",
+      href: "/dashboard/actions",
+      icon: "actions",
+    },
+    {
+      title: "Contact List",
+      href: "/dashboard/contacts",
+      icon: "contacts",
+    },
+    {
+      title: "Reports",
+      href: "/dashboard/reports",
+      icon: "reports",
+    },
+    {
+      title: "System Parameters",
+      href: "/dashboard/system",
+      icon: "info",
+    },
+    {
+      title: "Sign Out",
+      href: "/signout",
+      icon: "logout",
     },
   ],
 }

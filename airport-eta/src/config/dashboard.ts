@@ -26,7 +26,7 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Dashboard Settings",
-      href: "/dashboard/dashsettings",
+      href: "/dashboard/settings",
       icon: "settings",
     },
     {

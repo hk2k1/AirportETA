@@ -9,12 +9,21 @@ import { Breadcrumbs } from "@/components/Dashboard/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
 // import { CreateFlightLogDialog } from "@/components/forms/CreateFlightLogDialog";
 import { Toaster } from "sonner";
+import React from "react";
+import DraggableMap from "@/components/Dashboard/maps/DraggableMap"
+import { dashboardConfig } from "@/config/dashboard";
 
-const breadcrumbItems = [{ title: "Dashboard", link: "/dashboard" }];
 
-export default function Dashboard() {
+export default function Taxi() {
 //   const user = await auth();
 //   const { flightLogs, totalCount } = await getFlightLogs();
+// const [position, setPosition] = useState({ x: 0, y: 0 });
+// const [size, setSize] = useState({ width: 200, height: 200 });
+  const TAXI_NAV_INDEX = 1;
+  const breadcrumbItems = [
+    { title: "Dashboard", link: "/dashboard" },
+    { title: dashboardConfig.sidebarNav[TAXI_NAV_INDEX].title || 'Taxi Maps', link: dashboardConfig.sidebarNav[TAXI_NAV_INDEX].href || '/dashboard/taxi'},
+  ];
 
   return (
     <PageContainer scrollable={true}>
@@ -23,30 +32,19 @@ export default function Dashboard() {
         <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
             {/* Welcome, {user?.user?.name ?? "Pilot"}! 👋 */}
-            Welcome 👋
+            Taxi Supply Situation & Around Changi Airport ℹ️
           </h2>
           {/* <CreateFlightLogDialog /> */}
         </div>
 
-        <Separator className="my-6" />
+        <Separator className="my-2" />
 
         <div className="hidden md:block">
           <Breadcrumbs items={breadcrumbItems} />
         </div>
 
+        <DraggableMap />
 
-
-
-        {/* <div className="space-y-4">
-          <Heading
-            title={`Flight Logs (${totalCount})`}
-            description="Manage your flight logs efficiently"
-          />
-
-          <Suspense fallback={<div>Loading flight logs...</div>}>
-            <DataTable columns={columns} data={flightLogs} />
-          </Suspense>
-        </div> */}
       </div>
     </PageContainer>
   );

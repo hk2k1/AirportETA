@@ -30,6 +30,7 @@ import {
     ChartPie,
     BadgeInfo,
     LogOut,
+    MoveDiagonal2,
     type Icon as LucideIcon,
   } from "lucide-react"
   
@@ -64,6 +65,7 @@ import {
     reports: ChartPie,
     info: BadgeInfo,
     logout: LogOut,
+    move: MoveDiagonal2,
     gitHub: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

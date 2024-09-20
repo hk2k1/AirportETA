@@ -4,20 +4,34 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { MoveDiagonal2 } from 'lucide-react';
 
-const style = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "solid 1px #ddd",
-//   background: "#f0f0f0"
-};
+
+interface DraggableMapProps {
+    id: string;
+    initialPosition: { x: number; y: number };
+    initialSize: { width: number; height: number };
+    center: [number, number];
+    zoom: number;
+    headerText: string;
+    zIndex: number;
+    onFocus: () => void;
+  }
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
 
-const DraggableMap = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [size, setSize] = useState({ width: 600, height: 400 });
+const DraggableMap: React.FC<DraggableMapProps> = ({ 
+    id, 
+    initialPosition, 
+    initialSize, 
+    center, 
+    zoom, 
+    headerText,
+    zIndex,
+    onFocus,
+  }) => {
+  const [position, setPosition] = useState(initialPosition);
+  const [size, setSize] = useState(initialSize);
   const mapContainerRef = useRef(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   mapboxgl.accessToken = mapboxToken;
@@ -34,8 +48,8 @@ const DraggableMap = () => {
     const map = new mapboxgl.Map({
         container: mapContainerRef.current || '',
         style: 'mapbox://styles/mapbox/standard',
-        center: [103.91289, 1.413576],
-        zoom: 17,
+        center: center,
+        zoom: zoom,
     });
     mapRef.current = map;
 
@@ -63,8 +77,13 @@ const DraggableMap = () => {
 
       mapRef.current = map;
 
-    return () => map.remove();
-  }, []);
+    return () => {
+        if (mapRef.current) {
+            mapRef.current.remove();
+            mapRef.current = null;
+          }
+    };
+  }, [center, zoom]);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -72,17 +91,16 @@ const DraggableMap = () => {
     }
   }, [size]);
 
-  return (
-    <div style={{ width: '100%', height: '90vh' }}>
-        {/* <div
-            className="map-container"
-            ref={mapContainerRef}
-            style={{ height: '100px', width: '100px' }}
-        >
-      </div> */}
+return (
     <Rnd
-      style={style}
-      bounds={"window"}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "solid 1px #ddd",
+        zIndex: zIndex,
+      }}
+      bounds="window"
       size={{ width: size.width, height: size.height }}
       position={{ x: position.x, y: position.y }}
       onDragStop={(e, d) => {
@@ -95,24 +113,20 @@ const DraggableMap = () => {
         });
         setPosition(position);
       }}
+      resizeHandleComponent={{ bottomRight: <MoveDiagonal2 /> }}
+      onClick={onFocus}
     >
-      {/* <div
-            className="map-container"
-            ref={mapContainerRef}
-            style={{ height: '100%', width: '100%' }}
-        >
-      </div> */}
       <div className="flex flex-col w-full h-full">
-          <div className="bg-accent p-2 font-bold text-center">
-            T1 THA-1:46 THA-2:8 THA-3:2 SC:4
-          </div>
-          <div
-            className="map-container flex-grow"
-            ref={mapContainerRef}
-          ></div>
+        <div className="bg-accent p-2 font-bold text-center">
+          {headerText}
         </div>
+        <div
+          id={`map-container-${id}`}
+          className="map-container flex-grow"
+          ref={mapContainerRef}
+        ></div>
+      </div>
     </Rnd>
-    </div>
   );
 };
 

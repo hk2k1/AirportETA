@@ -114,7 +114,7 @@ export default function Taxi() {
         </div>
         
         <div>
-          Todo: Add points to maps, Change Style of Maps
+          ⓘ <em>Drag and Resize Maps</em>
         </div>
 
         <div className="relative w-full h-[80vh]">

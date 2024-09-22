@@ -20,7 +20,7 @@ export default function OverviewSettings() {
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
-                        {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+                        {[1, 2, 3, 4, 5].map((i) => (
                             <div key={i} className="flex items-center justify-between">
                                 <Skeleton className="h-4 w-[150px]" />
                                 <Skeleton className="h-6 w-10" />
@@ -40,8 +40,6 @@ export default function OverviewSettings() {
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
-                    <SettingSwitch settingKey="taxi-stand-a" label="Taxi Stand A" />
-                    <SettingSwitch settingKey="taxi-stand-b" label="Taxi Stand B" />
                     <SettingSwitch settingKey="est-pax-wait-time" label="Est. Pax Wait Time" />
                     <SettingSwitch settingKey="est-taxi-wait-time" label="Est. Taxi Wait Time" />
                     <SettingSwitch settingKey="flight-information" label="Flight Information" />

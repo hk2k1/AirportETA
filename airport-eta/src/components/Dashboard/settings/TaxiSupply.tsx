@@ -1,8 +1,8 @@
-// components/Dashboard/TaxiSupply.tsx
+// components/Dashboard/settings/TaxiSupply.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { SettingSwitch } from '@/components/Dashboard/settings/SettingSwitch';
 
 const terminalData = [
     { id: 1, stands: ['A', 'B', 'C', 'D'] },
@@ -37,7 +37,10 @@ export function TaxiSupply() {
                                         <Input type="number" defaultValue="150" className="w-20" />
                                     </TableCell>
                                     <TableCell>
-                                        <Switch defaultChecked />
+                                        <SettingSwitch 
+                                            settingKey={`taxi-stand-t${terminal.id}-${stand}`} 
+                                            label={`T${terminal.id} Stand ${stand}`} 
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ))

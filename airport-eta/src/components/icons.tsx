@@ -31,7 +31,10 @@ import {
     BadgeInfo,
     LogOut,
     MoveDiagonal2,
+    InfoIcon,
     type Icon as LucideIcon,
+    TriangleAlertIcon,
+    CircleAlertIcon,
   } from "lucide-react"
   
   export type Icon = typeof LucideIcon
@@ -66,6 +69,9 @@ import {
     info: BadgeInfo,
     logout: LogOut,
     move: MoveDiagonal2,
+    infoIcon: InfoIcon,
+    triangleAlertIcon: TriangleAlertIcon,
+    circleAlertIcon: CircleAlertIcon,
     gitHub: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

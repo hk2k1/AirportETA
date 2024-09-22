@@ -1,14 +1,9 @@
+// app/dashboard/taxi/page.tsx
 "use client"
 import React, { useState } from 'react';
 import PageContainer from "@/components/Dashboard/page-container";
-// import { DataTable } from "@/components/tables/flight-tables/data-table";
-// import { Suspense } from "react";
-// import { getFlightLogs } from "@/lib/actions/flightlog.action";
-// import { columns } from "@/components/tables/flight-tables/columns";
 import { Breadcrumbs } from "@/components/Dashboard/breadcrumbs";
-// import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
-// import { CreateFlightLogDialog } from "@/components/forms/CreateFlightLogDialog";
 import { Toaster } from "sonner";
 import DraggableMap from "@/components/Dashboard/maps/DraggableMap"
 import { dashboardConfig } from "@/config/dashboard";
@@ -23,6 +18,7 @@ interface MapConfig {
   zoom: number;
   headerText: string;
   zIndex: number;
+  geoJsonFile?: string;  // New property for GeoJSON file name
 }
 
 const initialMapConfigs: Omit<MapConfig, 'zIndex'>[] = [
@@ -34,7 +30,8 @@ const initialMapConfigs: Omit<MapConfig, 'zIndex'>[] = [
     pitch: 54.499999999999964,
     bearing: 24.799999999999727,
     zoom: 16.176774576698488,
-    headerText: "T1 THA-1:46 THA-2:8 THA-3:2 SC:4"
+    headerText: "T1 THA-1:46 THA-2:8 THA-3:2 SC:4",
+    geoJsonFile: "t1-points.geojson"
   },
   {
     id: "t2",
@@ -44,7 +41,8 @@ const initialMapConfigs: Omit<MapConfig, 'zIndex'>[] = [
     bearing: -67.22082244313833,
     center: [103.9893285842914, 1.3547199452920466],
     zoom: 15.36181532969349,
-    headerText: "T2 THA-1:32 THA-2:5 THA-3:1 SC:3"
+    headerText: "T2 THA-1:32 THA-2:5 THA-3:1 SC:3",
+    geoJsonFile: "t2-points.geojson"
   },
   {
     id: "t3",
@@ -54,7 +52,8 @@ const initialMapConfigs: Omit<MapConfig, 'zIndex'>[] = [
     bearing: 113.58340467833523,
     center: [103.98656378487374, 1.3563705376616753],
     zoom: 15.612390206932018,
-    headerText: "T3 THA-1:65 THA-2:5 SC:7"
+    headerText: "T3 THA-1:65 THA-2:5 SC:7",
+    geoJsonFile: "t3-points.geojson"
   },
   {
     id: "t4",
@@ -64,15 +63,12 @@ const initialMapConfigs: Omit<MapConfig, 'zIndex'>[] = [
     bearing: 113.57917755686185,
     center: [103.98211515565146, 1.3393699990872392],
     zoom: 15.145783265915266,
-    headerText: "T4 THA-1:10 THA-2:6 SC:1"
+    headerText: "T4 THA-1:10 THA-2:6 SC:1",
+    geoJsonFile: "t4-points.geojson"
   },
 ];
 
 export default function Taxi() {
-//   const user = await auth();
-//   const { flightLogs, totalCount } = await getFlightLogs();
-// const [position, setPosition] = useState({ x: 0, y: 0 });
-// const [size, setSize] = useState({ width: 200, height: 200 });
   const NAV_INDEX = 1;
   const breadcrumbItems = [
     { title: "Dashboard", link: "/dashboard" },
@@ -101,10 +97,8 @@ export default function Taxi() {
       <div className="space-y-6">
         <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-            {/* Welcome, {user?.user?.name ?? "Pilot"}! 👋 */}
             Taxi Supply Situation & Around Changi Airport ℹ️
           </h2>
-          {/* <CreateFlightLogDialog /> */}
         </div>
 
         <Separator className="my-2" />
@@ -131,10 +125,10 @@ export default function Taxi() {
               headerText={config.headerText}
               zIndex={config.zIndex}
               onFocus={() => handleFocus(config.id)}
+              geoJsonFile={config.geoJsonFile || ""}
             />
           ))}
         </div>
-
       </div>
     </PageContainer>
   );

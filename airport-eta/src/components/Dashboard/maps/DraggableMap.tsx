@@ -1,3 +1,4 @@
+// components/Dashboard/maps/DraggableMap.tsx
 "use client"
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -6,43 +7,40 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { MoveDiagonal2 } from 'lucide-react';
 
-
 interface DraggableMapProps {
-    id: string;
-    initialPosition: { x: number; y: number };
-    initialSize: { width: number; height: number };
-    center: [number, number];
-    pitch?: number;
-    bearing?: number;
-    zoom: number;
-    headerText: string;
-    zIndex: number;
-    onFocus: () => void;
-  }
+  id: string;
+  initialPosition: { x: number; y: number };
+  initialSize: { width: number; height: number };
+  center: [number, number];
+  pitch?: number;
+  bearing?: number;
+  zoom: number;
+  headerText: string;
+  zIndex: number;
+  onFocus: () => void;
+  geoJsonFile: string;  // New prop for GeoJSON file name
+}
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';
 
 const DraggableMap: React.FC<DraggableMapProps> = ({ 
-    id, 
-    initialPosition, 
-    initialSize, 
-    center,
-    pitch,
-    bearing,
-    zoom, 
-    headerText,
-    zIndex,
-    onFocus,
-  }) => {
+  id, 
+  initialPosition, 
+  initialSize, 
+  center,
+  pitch,
+  bearing,
+  zoom, 
+  headerText,
+  zIndex,
+  onFocus,
+  geoJsonFile,  // New prop
+}) => {
   const [position, setPosition] = useState(initialPosition);
   const [size, setSize] = useState(initialSize);
   const mapContainerRef = useRef(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   mapboxgl.accessToken = mapboxToken;
-
-  // const [moveEvent, setMoveEvent] = useState<mapboxgl.MapMouseEvent | undefined>(undefined);
-  // const [mapData, setMapData] = useState({ pitch: 0, bearing: 0, zoom: 9 });
-
 
   useEffect(() => {
     if (!mapboxToken) {
@@ -53,82 +51,58 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
     mapboxgl.accessToken = mapboxToken;
     
     const map = new mapboxgl.Map({
-        container: mapContainerRef.current || '',
-        style: 'mapbox://styles/mapbox/standard',
-        center: center,
-        pitch: pitch,
-        bearing: bearing,
-        zoom: zoom,
-        config: {
-          basemap: {
-            lightPreset: 'night', 
-            showPointOfInterestLabels: false,
-            showPlaceLabels: true,
-            showTransitLabels: false,
-            font: 'Roboto'
-          }
+      container: mapContainerRef.current || '',
+      style: 'mapbox://styles/mapbox/standard',
+      center: center,
+      pitch: pitch,
+      bearing: bearing,
+      zoom: zoom,
+      config: {
+        basemap: {
+          lightPreset: 'night', 
+          showPointOfInterestLabels: false,
+          showPlaceLabels: true,
+          showTransitLabels: false,
+          font: 'Roboto'
         }
-        
+      }
     });
     mapRef.current = map;
-    // Listen for move, zoom, pitch, and bearing changes
-    // mapRef.current.on('move', () => {
-    //   const map = mapRef.current;
-    //   if (map) {
-    //     setMapData({
-    //       pitch: map.getPitch(),
-    //       bearing: map.getBearing(),
-    //       zoom: map.getZoom()
-    //     });
-    //   }
-    // });
 
-    // mapRef.current.on('mousemove', (e) => {
-    //   setMoveEvent(e);
-    // });
+    map.on('load', () => {
+      // Load GeoJSON data
+      fetch(`/geojson/${geoJsonFile}`)
+        .then(response => response.json())
+        .then(data => {
+          map.addSource(id, {
+            type: 'geojson',
+            data: data
+          });
 
-    // map.on('style.load', () => {
-    //   map.setConfig('basemap', 
-    //     {
-    //       lightPreset: 'night', 
-    //       showPointOfInterestLabels: false,
-    //       showPlaceLabels: true,
-    //       showTransitLabels: false,
-    //       font: 'Roboto'
-    //     });
-    // });
+          map.addLayer({
+            id: `points-${id}`,
+            type: 'circle',
+            source: id,
+            paint: {
+              'circle-radius': 6,
+              'circle-color': '#fafaf9',
+              'circle-stroke-width': 2,
+              'circle-stroke-color': '#ffffff',
+              'circle-emissive-strength': 1
+            }
+          });
+        });
+    });
 
-    //   map.on('load', () => {
-    //     map.addSource('earthquakes', {
-    //       type: 'geojson',
-    //       data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson'
-    //     });
-
-    //     map.addLayer({
-    //       id: 'earthquakes-layer',
-    //       type: 'circle',
-    //       source: 'earthquakes',
-    //       paint: {
-    //         'circle-radius': 4,
-    //         'circle-stroke-width': 2,
-    //         'circle-color': 'red',
-    //         'circle-stroke-color': 'white'
-    //       }
-    //     });
-    //   });
-
-      map.addControl(new mapboxgl.FullscreenControl());
-    //   map.addControl(new mapboxgl.GeolocateControl());
-
-      mapRef.current = map;
+    map.addControl(new mapboxgl.FullscreenControl());
 
     return () => {
-        if (mapRef.current) {
-            mapRef.current.remove();
-            mapRef.current = null;
-          }
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
     };
-  }, [center, pitch, bearing, zoom]);
+  }, [center, pitch, bearing, zoom, geoJsonFile, id]);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -136,15 +110,7 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
     }
   }, [size]);
 
-  // console.log({
-  //   mouse: {
-  //     MouseEvent: moveEvent,
-  //   },
-  //   pitch: mapData.pitch,
-  //   bearing: mapData.bearing,
-  //   zoom: mapData.zoom
-  // });
-return (
+  return (
     <Rnd
       style={{
         display: "flex",

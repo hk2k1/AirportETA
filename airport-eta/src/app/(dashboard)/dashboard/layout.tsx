@@ -4,11 +4,15 @@ import { getAuthUser } from "@/utils/supabase-server";
 // import { ScrollArea } from "@/components/ui/scroll-area";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { Montserrat } from "next/font/google"
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "FlightLogger Dashboard",
   description: "Track flight logs",
 };
+
+const font = Montserrat({ weight: "400", subsets: ["latin"], variable: "--font-sans" });
 
 export default async function DashboardLayout({
   children,
@@ -23,7 +27,11 @@ export default async function DashboardLayout({
   return (
     <div className="flex">
       <Sidebar />
-      <div className="w-full flex-1 overflow-hidden">
+      <div className={cn(
+      "w-full flex-1 overflow-hidden",
+      font.className,
+      font.variable
+    )}>
         <Header />
         {children}
       </div>

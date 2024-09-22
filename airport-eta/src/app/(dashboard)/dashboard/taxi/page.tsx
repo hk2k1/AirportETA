@@ -18,6 +18,8 @@ interface MapConfig {
   initialPosition: { x: number; y: number };
   initialSize: { width: number; height: number };
   center: [number, number];
+  pitch?: number;
+  bearing?: number;
   zoom: number;
   headerText: string;
   zIndex: number;
@@ -28,19 +30,42 @@ const initialMapConfigs: Omit<MapConfig, 'zIndex'>[] = [
     id: "t1",
     initialPosition: { x: 0, y: 0 },
     initialSize: { width: 400, height: 300 },
-    center: [103.91289, 1.413576],
-    zoom: 17,
+    center: [103.99022278769138, 1.3611983664874288],
+    pitch: 54.499999999999964,
+    bearing: 24.799999999999727,
+    zoom: 16.176774576698488,
     headerText: "T1 THA-1:46 THA-2:8 THA-3:2 SC:4"
   },
   {
     id: "t2",
     initialPosition: { x: 420, y: 0 },
     initialSize: { width: 400, height: 300 },
-    center: [103.91789, 1.415576],
-    zoom: 17,
+    pitch: 39.29281560662686,
+    bearing: -67.22082244313833,
+    center: [103.9893285842914, 1.3547199452920466],
+    zoom: 15.36181532969349,
     headerText: "T2 THA-1:32 THA-2:5 THA-3:1 SC:3"
   },
-  // Add more configurations as needed
+  {
+    id: "t3",
+    initialPosition: { x: 0, y: 360 },
+    initialSize: { width: 400, height: 300 },
+    pitch: 5.266396097420951,
+    bearing: 113.58340467833523,
+    center: [103.98656378487374, 1.3563705376616753],
+    zoom: 15.612390206932018,
+    headerText: "T3 THA-1:65 THA-2:5 SC:7"
+  },
+  {
+    id: "t4",
+    initialPosition: { x: 420, y: 360 },
+    initialSize: { width: 400, height: 300 },
+    pitch: 52.79281560662688,
+    bearing: 113.57917755686185,
+    center: [103.98211515565146, 1.3393699990872392],
+    zoom: 15.145783265915266,
+    headerText: "T4 THA-1:10 THA-2:6 SC:1"
+  },
 ];
 
 export default function Taxi() {
@@ -100,6 +125,8 @@ export default function Taxi() {
               initialPosition={config.initialPosition}
               initialSize={config.initialSize}
               center={config.center}
+              pitch={config.pitch}
+              bearing={config.bearing}
               zoom={config.zoom}
               headerText={config.headerText}
               zIndex={config.zIndex}

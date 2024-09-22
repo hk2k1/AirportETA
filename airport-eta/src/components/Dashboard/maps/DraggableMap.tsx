@@ -12,6 +12,8 @@ interface DraggableMapProps {
     initialPosition: { x: number; y: number };
     initialSize: { width: number; height: number };
     center: [number, number];
+    pitch?: number;
+    bearing?: number;
     zoom: number;
     headerText: string;
     zIndex: number;
@@ -24,7 +26,9 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
     id, 
     initialPosition, 
     initialSize, 
-    center, 
+    center,
+    pitch,
+    bearing,
     zoom, 
     headerText,
     zIndex,
@@ -35,6 +39,9 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
   const mapContainerRef = useRef(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   mapboxgl.accessToken = mapboxToken;
+
+  // const [moveEvent, setMoveEvent] = useState<mapboxgl.MapMouseEvent | undefined>(undefined);
+  // const [mapData, setMapData] = useState({ pitch: 0, bearing: 0, zoom: 9 });
 
 
   useEffect(() => {
@@ -49,9 +56,47 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
         container: mapContainerRef.current || '',
         style: 'mapbox://styles/mapbox/standard',
         center: center,
+        pitch: pitch,
+        bearing: bearing,
         zoom: zoom,
+        config: {
+          basemap: {
+            lightPreset: 'night', 
+            showPointOfInterestLabels: false,
+            showPlaceLabels: true,
+            showTransitLabels: false,
+            font: 'Roboto'
+          }
+        }
+        
     });
     mapRef.current = map;
+    // Listen for move, zoom, pitch, and bearing changes
+    // mapRef.current.on('move', () => {
+    //   const map = mapRef.current;
+    //   if (map) {
+    //     setMapData({
+    //       pitch: map.getPitch(),
+    //       bearing: map.getBearing(),
+    //       zoom: map.getZoom()
+    //     });
+    //   }
+    // });
+
+    // mapRef.current.on('mousemove', (e) => {
+    //   setMoveEvent(e);
+    // });
+
+    // map.on('style.load', () => {
+    //   map.setConfig('basemap', 
+    //     {
+    //       lightPreset: 'night', 
+    //       showPointOfInterestLabels: false,
+    //       showPlaceLabels: true,
+    //       showTransitLabels: false,
+    //       font: 'Roboto'
+    //     });
+    // });
 
     //   map.on('load', () => {
     //     map.addSource('earthquakes', {
@@ -83,7 +128,7 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
             mapRef.current = null;
           }
     };
-  }, [center, zoom]);
+  }, [center, pitch, bearing, zoom]);
 
   useEffect(() => {
     if (mapRef.current) {
@@ -91,6 +136,14 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
     }
   }, [size]);
 
+  // console.log({
+  //   mouse: {
+  //     MouseEvent: moveEvent,
+  //   },
+  //   pitch: mapData.pitch,
+  //   bearing: mapData.bearing,
+  //   zoom: mapData.zoom
+  // });
 return (
     <Rnd
       style={{

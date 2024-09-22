@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/Providers/theme-provider"
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 
-const Mont = Roboto_Mono({ weight: '400', subsets: ["latin"], variable: "--font-sans" });
+const font = Roboto_Mono({ weight: '400', subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {
@@ -59,8 +59,8 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background antialiased",
-          Mont.className,
-          Mont.variable
+          font.className,
+          font.variable
         )}
       >
         <NextTopLoader color="#2299DD" easing="ease" showSpinner={false} />

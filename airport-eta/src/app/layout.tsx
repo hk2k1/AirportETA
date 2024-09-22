@@ -63,7 +63,7 @@ export default function RootLayout({
           font.variable
         )}
       >
-        <NextTopLoader color="#2299DD" easing="ease" showSpinner={false} />
+        <NextTopLoader color="#2299DD" easing="ease" height={5} showSpinner={false} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Toaster position="bottom-center" reverseOrder={false} />
           {children}

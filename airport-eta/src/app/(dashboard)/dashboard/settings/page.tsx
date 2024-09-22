@@ -1,14 +1,18 @@
+// app/dashboard/settings/page.tsx
 "use client"
+import React from 'react';
 import PageContainer from "@/components/Dashboard/page-container";
 import { Breadcrumbs } from "@/components/Dashboard/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "sonner";
 import { dashboardConfig } from "@/config/dashboard";
-import { Thresholds } from "./Thresholds";
-import { TaxiSupply } from "./TaxiSupply";
-import { ShortCutBlacklisting } from "./Blacklisting";
+import { Thresholds } from "@/components/Dashboard/settings/Thresholds";
+import { TaxiSupply } from "@/components/Dashboard/settings/TaxiSupply";
+import { ShortCutBlacklisting } from "@/components/Dashboard/settings/Blacklisting";
+import OverviewSettings  from  "./overview-settings";
 
-export default function Dashboard() {
+
+export default function DashboardSettings() {
     const NAV_INDEX = 2;
     const breadcrumbItems = [
         { title: "Dashboard", link: "/dashboard" },
@@ -31,10 +35,11 @@ export default function Dashboard() {
                     <Breadcrumbs items={breadcrumbItems} />
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <Thresholds />
-                    <TaxiSupply />
                     <ShortCutBlacklisting />
+                    <OverviewSettings />
+                    <TaxiSupply />
                 </div>
             </div>
         </PageContainer>

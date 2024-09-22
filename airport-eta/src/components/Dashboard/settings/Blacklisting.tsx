@@ -1,21 +1,23 @@
-// components/Dashboard/PaxQueueAndTaxiSupply.tsx
+// components/Dashboard/ShortCutBlacklisting.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Separator } from "@/components/ui/separator";
 
-export function TaxiSupply() {
+export function ShortCutBlacklisting() {
     return (
-        <Card className="col-span-2 row-span-2">
+        <Card>
             <CardHeader>
-                <CardTitle>Pax Queue (Main) & Taxi Supply</CardTitle>
+                <CardTitle>Short Cut Blacklisting</CardTitle>
+                <Separator />
             </CardHeader>
             <CardContent>
                 <Table>
                     <TableHeader>
                         <TableRow>
                             <TableHead>Terminal</TableHead>
-                            <TableHead>Pax Queue</TableHead>
+                            <TableHead>THA Count</TableHead>
                             <TableHead>Enable</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -24,7 +26,7 @@ export function TaxiSupply() {
                             <TableRow key={terminal}>
                                 <TableCell>Terminal {terminal}</TableCell>
                                 <TableCell>
-                                    <Input type="number" defaultValue="150" className="w-20" />
+                                    <Input type="number" defaultValue="4" className="w-16" />
                                 </TableCell>
                                 <TableCell>
                                     <Switch defaultChecked={terminal <= 2} />

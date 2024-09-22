@@ -1,12 +1,38 @@
+// components/Dashboard/settings/OverviewSettings.tsx
+'use client'
+
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useSettings } from '@/lib/contexts/SettingsContext';
+import { SettingSwitch } from '@/components/Dashboard/settings/SettingSwitch';
 
 export default function OverviewSettings() {
-  return (
-    <>
+    const { loading } = useSettings();
+
+    if (loading) {
+        return (
+            <Card>
+                <CardHeader>
+                    <CardTitle>Overview Page Components</CardTitle>
+                    <Separator />
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+                            <div key={i} className="flex items-center justify-between">
+                                <Skeleton className="h-4 w-[150px]" />
+                                <Skeleton className="h-6 w-10" />
+                            </div>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
+        )
+    }
+
+    return (
         <Card>
             <CardHeader>
                 <CardTitle>Overview Page Components</CardTitle>
@@ -14,29 +40,15 @@ export default function OverviewSettings() {
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                        <Label htmlFor="est-pax-wait-time">Est. Pax Wait Time</Label>
-                        <Switch id="est-pax-wait-time" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <Label htmlFor="est-taxi-wait-time">Est. Taxi Wait Time</Label>
-                        <Switch id="est-taxi-wait-time" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <Label htmlFor="flight-information">Flight Information</Label>
-                        <Switch id="flight-information" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <Label htmlFor="alerts-bulletin">Alerts Bulletin</Label>
-                        <Switch id="alerts-bulletin" defaultChecked />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <Label htmlFor="est-taxi-queue">Est. Taxi Queue & Taxi Supply</Label>
-                        <Switch id="est-taxi-queue" defaultChecked />
-                    </div>
+                    <SettingSwitch settingKey="taxi-stand-a" label="Taxi Stand A" />
+                    <SettingSwitch settingKey="taxi-stand-b" label="Taxi Stand B" />
+                    <SettingSwitch settingKey="est-pax-wait-time" label="Est. Pax Wait Time" />
+                    <SettingSwitch settingKey="est-taxi-wait-time" label="Est. Taxi Wait Time" />
+                    <SettingSwitch settingKey="flight-information" label="Flight Information" />
+                    <SettingSwitch settingKey="alerts-bulletin" label="Alerts Bulletin" />
+                    <SettingSwitch settingKey="est-taxi-queue" label="Est. Taxi Queue & Taxi Supply" />
                 </div>
             </CardContent>
         </Card>
-    </>
-  )
+    )
 }

@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Montserrat } from "next/font/google"
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "FlightLogger Dashboard",
@@ -33,6 +34,7 @@ export default async function DashboardLayout({
       font.variable
     )}>
         <Header />
+        <Toaster />
         {children}
       </div>
     </div>

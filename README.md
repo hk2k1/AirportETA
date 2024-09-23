@@ -167,4 +167,3 @@ This configuration sets up a Node.js and MongoDB environment, includes the Mongo
 ---
 
 For more detailed information about using Supabase with this project, please refer to our [API Reference Documentation](./airport-eta/README.md).
-```

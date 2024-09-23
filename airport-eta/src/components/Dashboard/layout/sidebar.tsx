@@ -7,6 +7,9 @@ import { useSidebar } from "@/hooks/useSidebar";
 import Link from "next/link";
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site";
+import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/client"
+import { useRouter } from "next/navigation"
 
 type SidebarProps = {
   className?: string;
@@ -14,6 +17,13 @@ type SidebarProps = {
 
 export default function Sidebar({ className }: SidebarProps) {
   const { isMinimized, toggle } = useSidebar();
+  const router = useRouter()
+  const supabase = createClient();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.refresh()
+  }
 
   const handleToggle = () => {
     toggle();
@@ -22,7 +32,7 @@ export default function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        `relative  hidden h-screen flex-none border-r bg-card transition-[width] duration-500 md:block`,
+        `relative hidden h-screen flex-col flex-none border-r bg-card transition-[width] duration-500 md:flex`,
         !isMinimized ? "w-60" : "w-[72px]",
         className
       )}
@@ -44,12 +54,25 @@ export default function Sidebar({ className }: SidebarProps) {
         )}
         onClick={handleToggle}
       />
-      <div className="space-y-4 py-4">
+      <div className="flex-grow space-y-4 py-4">
         <div className="px-3 py-2">
           <div className="mt-3 space-y-1">
             <DashboardNav items={dashboardConfig.sidebarNav} />
           </div>
         </div>
+      </div>
+      <div className="p-3">
+        <Button
+          variant="outline"
+          className={cn(
+            "w-full justify-start",
+            isMinimized && "px-2"
+          )}
+          onClick={handleSignOut}
+        >
+          <Icons.logout className="h-4 w-4 mr-2" />
+          {!isMinimized && "Sign Out"}
+        </Button>
       </div>
     </aside>
   );

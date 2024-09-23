@@ -11,7 +11,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   // playlists: Playlist[];
 }
 
-export function MobileSidebar({ className }: SidebarProps) {
+export function MobileSidebar({ }: SidebarProps) {
   const [open, setOpen] = useState(false);
   return (
     <>

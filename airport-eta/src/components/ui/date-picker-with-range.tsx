@@ -19,7 +19,7 @@ interface DatePickerWithRangeProps {
   className?: string;
 }
 
-export const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({ setDateRange, className }) => {
+export const DatePickerWithRange: React.FC<DatePickerWithRangeProps> = ({ className }) => {
 // export function DatePickerWithRange({
 //   setDateRange,
 //   className,

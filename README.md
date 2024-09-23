@@ -131,7 +131,7 @@ The project is configured for deployment on Vercel. For detailed deployment inst
 
 ## API Reference
 
-For information on accessing Supabase and using Supabase REST and GraphQL APIs, please refer to our [API Reference Documentation](./API_REFERENCE.md).
+For information on accessing Supabase and using Supabase REST and GraphQL APIs, please refer to our [API Reference Documentation](./airport-eta/README.md).
 
 ## Development Container Configuration
 
@@ -166,5 +166,5 @@ This configuration sets up a Node.js and MongoDB environment, includes the Mongo
 
 ---
 
-For more detailed information about using Supabase with this project, please refer to our [API Reference Documentation](./API_REFERENCE.md).
+For more detailed information about using Supabase with this project, please refer to our [API Reference Documentation](./airport-eta/README.md).
 ```

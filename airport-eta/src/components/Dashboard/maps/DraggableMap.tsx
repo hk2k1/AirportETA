@@ -87,7 +87,7 @@ const DraggableMap: React.FC<DraggableMapProps> = ({
               'circle-radius': 6,
               'circle-color': '#fafaf9',
               'circle-stroke-width': 2,
-              'circle-stroke-color': '#ffffff',
+              'circle-stroke-color': '#71717a',
               'circle-emissive-strength': 1
             }
           });

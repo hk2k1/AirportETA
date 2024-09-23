@@ -1,11 +1,12 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { encodedRedirect } from "@/utils/utils";
 import { redirect } from "next/navigation";
 import { userAuthSchema } from "@/lib/validations/auth";
 import { z } from "zod";
 import { headers } from "next/headers";
+import { Provider } from "@supabase/supabase-js";
+import { getURL } from "@/utils/helper";
 
 export const emailLogin = async (values: z.infer<typeof userAuthSchema>) => {
   const validatedData = userAuthSchema.safeParse(values);
@@ -71,4 +72,25 @@ export async function getAuthUser() {
     console.error("Error:", error)
     return null
   }
+}
+
+export async function oAuthSignIn(provider: Provider){
+  if (!provider) {
+    return redirect('/login?message=No provider selected')
+}
+
+const supabase = createClient();
+  const redirectUrl = getURL("/auth/callback")
+  const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+          redirectTo: redirectUrl,
+      }
+  })
+
+  if (error) {
+      redirect('/login?message=Could not authenticate user')
+  }
+
+  return redirect(data.url)
 }

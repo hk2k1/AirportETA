@@ -16,10 +16,20 @@ import { Icons } from "@/components/icons"
 import { userAuthSchema } from "@/lib/validations/auth"
 import toast from "react-hot-toast"
 // import { useTransition } from "react"
+import OAuthSignIn from "./oauth-signin"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type UserFormValue = z.infer<typeof userAuthSchema>;
+
+const oAuthProviders = [
+  {
+    name: 'github' as const,
+    displayName: 'GitHub',
+    icon: 'gitHub' as keyof typeof Icons
+  }
+  // Add more providers here as needed
+];
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { 
@@ -31,7 +41,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
+  const [isOAuthLoading, setIsOAuthLoading] = React.useState<boolean>(false)
   // const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (values: UserFormValue) => {
@@ -62,7 +72,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading || isGitHubLoading}
+              disabled={isLoading || isOAuthLoading}
               {...register("email")}
             />
             {errors?.email && (
@@ -103,22 +113,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <button
-        type="button"
-        className={cn(buttonVariants({ variant: "outline" }))}
-        onClick={() => {
-          setIsGitHubLoading(true)
-          // signIn("github")
-        }}
-        disabled={isLoading || isGitHubLoading}
-      >
-        {isGitHubLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "}
-        Github
-      </button>
+      <div className={cn(
+        "grid gap-2",
+        oAuthProviders.length === 1 ? "grid-cols-1" : 
+        oAuthProviders.length === 2 ? "grid-cols-2" : 
+        "grid-cols-2 sm:grid-cols-3"
+      )}>
+        {oAuthProviders.map((provider) => (
+          <OAuthSignIn
+            key={provider.name}
+            provider={provider}
+            isLoading={isOAuthLoading}
+            setIsLoading={setIsOAuthLoading}
+            className="w-full"
+          />
+        ))}
+      </div>
     </div>
   )
 }

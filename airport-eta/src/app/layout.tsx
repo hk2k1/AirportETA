@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site"
@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/Providers/theme-provider"
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 
-const font = Roboto_Mono({ weight: '400', subsets: ["latin"], variable: "--font-sans" });
+const font = Montserrat({ weight: "400", subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: {

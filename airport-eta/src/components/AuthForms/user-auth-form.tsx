@@ -27,6 +27,11 @@ const oAuthProviders = [
     name: 'github' as const,
     displayName: 'GitHub',
     icon: 'gitHub' as keyof typeof Icons
+  },
+  {
+    name: 'google' as const,
+    displayName: 'Google',
+    icon: 'google' as keyof typeof Icons
   }
   // Add more providers here as needed
 ];

@@ -43,7 +43,7 @@ export default function OverviewSettings() {
                     <SettingSwitch settingKey="est-pax-wait-time" label="Est. Pax Wait Time" />
                     <SettingSwitch settingKey="est-taxi-wait-time" label="Est. Taxi Wait Time" />
                     <SettingSwitch settingKey="flight-information" label="Flight Information" />
-                    <SettingSwitch settingKey="alerts-bulletin" label="Alerts Bulletin" />
+                    <SettingSwitch settingKey="alerts-bulletins" label="Alerts Bulletin" />
                     <SettingSwitch settingKey="est-taxi-queue" label="Est. Taxi Queue & Taxi Supply" />
                 </div>
             </CardContent>

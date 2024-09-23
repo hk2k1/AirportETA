@@ -35,7 +35,10 @@ import {
     type Icon as LucideIcon,
     TriangleAlertIcon,
     CircleAlertIcon,
+    
   } from "lucide-react"
+
+  import { FaGoogle } from "react-icons/fa";
   
   export type Icon = typeof LucideIcon
   
@@ -89,6 +92,7 @@ import {
         ></path>
       </svg>
     ),
+    google: FaGoogle,
     twitter: Twitter,
     check: Check,
   }

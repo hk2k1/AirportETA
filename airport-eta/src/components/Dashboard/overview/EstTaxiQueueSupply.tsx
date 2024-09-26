@@ -1,17 +1,43 @@
-// components/Dashboard/overview/EstTaxiQueueSupply.tsx
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Disable } from '@/components/Dashboard/Disable';
-import { AreaChart, Area, BarChart, Bar, XAxis, CartesianGrid } from 'recharts';
-import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { ChartContainer } from "@/components/ui/chart";
 import { Badge } from "@/components/ui/badge";
 import { Icons } from "@/components/icons";
 
-const terminals = [
-  { id: 1, stands: ['A', 'B', 'C', 'D'] },
-  { id: 2, stands: ['North', 'South'] },
-  { id: 3, stands: ['North', 'South'] },
-  { id: 4, stands: ['North', 'South'] },
+const terminalData = [
+  { 
+    id: 1, 
+    stands: [
+      { name: 'A', taxis: 26 },
+      { name: 'B', taxis: 30 }
+    ],
+    taxisNeeded: 8
+  },
+  { 
+    id: 2, 
+    stands: [
+      { name: 'North', taxis: 20 },
+      { name: 'South', taxis: 15 }
+    ],
+    taxisNeeded: 12
+  },
+  { 
+    id: 3, 
+    stands: [
+      { name: 'North', taxis: 35 },
+      { name: 'South', taxis: 28 }
+    ],
+    taxisNeeded: 5
+  },
+  { 
+    id: 4, 
+    stands: [
+      { name: 'North', taxis: 40 }
+    ],
+    taxisNeeded: 10
+  },
 ];
 
 const mockChartData = [
@@ -33,76 +59,63 @@ const chartConfig = {
 export function EstTaxiQueueSupply() {
   return (
     <Disable settingKey="est-taxi-queue">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {terminals.map((terminal) => (
-          <Card key={terminal.id} className="flex flex-col">
-            <CardHeader>
-              <CardTitle>Terminal {terminal.id} Taxi Queue & Supply</CardTitle>
-              <CardDescription>Estimated wait times and taxi demand</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                {terminal.stands.map((stand) => (
-                  <Disable key={stand} settingKey={`taxi-stand-t${terminal.id}-${stand}`}>
-                    <Card>
-                      <CardHeader className="py-2">
-                        <CardTitle className="text-sm">Stand {stand}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-2xl font-bold">{Math.floor(Math.random() * 50) + 10}</div>
-                        <div className="text-sm text-muted-foreground">pax waiting</div>
-                      </CardContent>
-                    </Card>
-                  </Disable>
-                ))}
-              </div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center">
-                  <Icons.taxi className="mr-2" />
-                  <span className="text-lg font-semibold">
-                    {Math.floor(Math.random() * 20) + 5} taxis needed
-                  </span>
+      <Card className="h-max">
+        <CardHeader className="p-2 pb-0">
+          <CardTitle className="text-lg font-medium">Est. Taxi Queue & Supply</CardTitle>
+        </CardHeader>
+        <CardContent className="p-2">
+          <div className="grid grid-cols-2 gap-2">
+            {terminalData.map((terminal) => (
+              <Card key={terminal.id} className="p-3">
+                <div className="flex flex-col h-full">
+                  <CardTitle className="text-md font-medium mb-2">Terminal {terminal.id}</CardTitle>
+                  <div className="flex justify-between flex-grow">
+                    <div className="space-y-2 flex-grow">
+                      <div className="grid grid-cols-2 gap-2">
+                        {terminal.stands.map((stand) => (
+                          <Disable key={stand.name} settingKey={`taxi-stand-t${terminal.id}-${stand.name}`}>
+                            <Badge variant="outline" className="text-sm p-1">
+                              Stand {stand.name}: {stand.taxis}
+                            </Badge>
+                          </Disable>
+                        ))}
+                      </div>
+                      <div className="flex items-center mt-2 text-sm">
+                        <Icons.taxi className="w-4 h-4 mr-2" />
+                        <span>{terminal.taxisNeeded} taxis needed</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-grow space-x-8">
+                    <div className="w-40 h-24 ml-4">
+                      <ChartContainer config={chartConfig}>
+                        <AreaChart data={mockChartData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" tick={{fontSize: 10}} />
+                          <YAxis tick={{fontSize: 10}} />
+                          <Tooltip />
+                          <Area type="monotone" dataKey="value" stroke="hsl(var(--chart-1))" fill="hsl(var(--chart-1))" fillOpacity={0.2} />
+                        </AreaChart>
+                      </ChartContainer>
+                    </div>
+                    <div className="w-40 h-24 ml-4">
+                      <ChartContainer config={chartConfig}>
+                        <BarChart data={mockChartData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" tick={{fontSize: 10}} />
+                          <YAxis tick={{fontSize: 10}} />
+                          <Tooltip />
+                          <Bar dataKey="value" fill="hsl(var(--chart-1))" />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                  </div>
                 </div>
-                <Badge variant="secondary">High Demand</Badge>
-              </div>
-              <div className="space-y-4">
-                <ChartContainer config={chartConfig} className="h-[200px]">
-                  <AreaChart data={mockChartData}>
-                    <XAxis
-                      dataKey="name"
-                      tickLine={false}
-                      axisLine={false}
-                      tickFormatter={(value) => value.slice(0, 2)}
-                    />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <ChartTooltip />
-                    <Area
-                      type="monotone"
-                      dataKey="value"
-                      stroke="hsl(var(--chart-1))"
-                      fill="hsl(var(--chart-1))"
-                      fillOpacity={0.2}
-                    />
-                  </AreaChart>
-                </ChartContainer>
-                <ChartContainer config={chartConfig} className="h-[200px]">
-                  <BarChart data={mockChartData}>
-                    <XAxis
-                      dataKey="name"
-                      tickLine={false}
-                      axisLine={false}
-                      tickFormatter={(value) => value.slice(0, 2)}
-                    />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <ChartTooltip />
-                    <Bar dataKey="value" fill="hsl(var(--chart-1))" />
-                  </BarChart>
-                </ChartContainer>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </Disable>
   );
 }

@@ -13,7 +13,7 @@ const terminalData = [
 
 export function TaxiSupply() {
     return (
-        <Card className="col-span-3">
+        <Card className="col-span-4">
             <CardHeader>
                 <CardTitle>Pax Queue (Main) & Taxi Supply</CardTitle>
             </CardHeader>

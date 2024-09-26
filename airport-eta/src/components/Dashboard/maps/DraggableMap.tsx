@@ -16,9 +16,9 @@ interface DraggableMapProps {
   bearing?: number;
   zoom: number;
   headerText: string;
-  zIndex: number;
+  zIndex?: number;
   onFocus: () => void;
-  geoJsonFile: string;  // New prop for GeoJSON file name
+  geoJsonFile?: string;  // New prop for GeoJSON file name
 }
 
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || '';

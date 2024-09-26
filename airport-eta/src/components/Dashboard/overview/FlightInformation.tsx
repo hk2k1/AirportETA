@@ -3,58 +3,38 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Disable } from '@/components/Dashboard/Disable';
-import { Badge } from "@/components/ui/badge";
 
-const terminals = [
-  { id: 1, stands: ['A', 'B', 'C', 'D'] },
-  { id: 2, stands: ['North', 'South'] },
-  { id: 3, stands: ['North', 'South'] },
-  { id: 4, stands: ['North', 'South'] },
+const terminalData = [
+  { id: 1, landedPax: 150, landingFlights: 3, landingPax: 280 },
+  { id: 2, landedPax: 200, landingFlights: 2, landingPax: 180 },
+  { id: 3, landedPax: 100, landingFlights: 4, landingPax: 320 },
+  { id: 4, landedPax: 75, landingFlights: 1, landingPax: 90 },
 ];
 
 export function FlightInformation() {
   return (
     <Disable settingKey="flight-information">
-      <Card>
-        <CardHeader>
-          <CardTitle>Flight Information</CardTitle>
+      <Card className="h-full">
+        <CardHeader className="p-2">
+          <CardTitle className="text-sm font-medium">Flight Information</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-2">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Terminal</TableHead>
-                <TableHead>Taxi Stands</TableHead>
-                <TableHead>Landed (last 20 min)</TableHead>
-                <TableHead>Landing (next 20 min)</TableHead>
+                <TableHead className="py-1 px-2 text-xs">Term</TableHead>
+                <TableHead className="py-1 px-2 text-xs">Landed</TableHead>
+                <TableHead className="py-1 px-2 text-xs">Landing</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {terminals.map((terminal) => {
-                const landedPax = Math.floor(Math.random() * 200) + 50;
-                const landingFlights = Math.floor(Math.random() * 5) + 1;
-                const landingPax = Math.floor(Math.random() * 300) + 100;
-                
-                return (
-                  <TableRow key={terminal.id}>
-                    <TableCell className="font-medium">Terminal {terminal.id}</TableCell>
-                    <TableCell>
-                      {terminal.stands.map((stand) => (
-                        <Badge key={stand} variant="outline" className="mr-1">
-                          {stand}
-                        </Badge>
-                      ))}
-                    </TableCell>
-                    <TableCell>
-                      <span className="font-semibold">{landedPax}</span> pax
-                    </TableCell>
-                    <TableCell>
-                      <span className="font-semibold">{landingFlights}</span> flights,{' '}
-                      <span className="font-semibold">{landingPax}</span> pax
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {terminalData.map((terminal) => (
+                <TableRow key={terminal.id}>
+                  <TableCell className="py-1 px-2 text-xs font-medium">T{terminal.id}</TableCell>
+                  <TableCell className="py-1 px-2 text-xs">{terminal.landedPax}p</TableCell>
+                  <TableCell className="py-1 px-2 text-xs">{terminal.landingFlights}f, {terminal.landingPax}p</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </CardContent>

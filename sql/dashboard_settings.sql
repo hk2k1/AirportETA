@@ -8,7 +8,7 @@ INSERT INTO dashboard_settings (key, enabled) VALUES
 ('est-pax-wait-time', true),
 ('est-taxi-wait-time', true),
 ('flight-information', true),
-('alerts-bulletin', true),
+('alerts-bulletins', true),
 ('est-taxi-queue', true),
 ('taxi-stand-t1-A', true),
 ('taxi-stand-t1-B', true),

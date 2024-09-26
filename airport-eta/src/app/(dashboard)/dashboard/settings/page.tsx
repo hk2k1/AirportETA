@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { updateSettings } from '@/lib/actions/updateSettings';
 import { toast } from "@/hooks/use-toast";
 import { SettingsProvider, useSettings } from '@/lib/contexts/SettingsContext';
+import { ChangiApp } from '@/components/Dashboard/settings/ChangiApp';
 
 function DashboardSettingsContent() {
     const NAV_INDEX = 2;
@@ -57,9 +58,10 @@ function DashboardSettingsContent() {
                     </div>
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                     <Thresholds />
                     <ShortCutBlacklisting />
+                    <ChangiApp />
                     <OverviewSettings />
                     <TaxiSupply />
                 </div>

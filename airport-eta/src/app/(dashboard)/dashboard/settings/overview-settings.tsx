@@ -40,10 +40,10 @@ export default function OverviewSettings() {
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
-                    <SettingSwitch settingKey="est-pax-wait-time" label="Est. Pax Wait Time" />
-                    <SettingSwitch settingKey="est-taxi-wait-time" label="Est. Taxi Wait Time" />
-                    <SettingSwitch settingKey="flight-information" label="Flight Information" />
-                    <SettingSwitch settingKey="alerts-bulletins" label="Alerts Bulletin" />
+                    <SettingSwitch settingKey="EstPaxWaitTime" label="Est. Pax Wait Time" />
+                    <SettingSwitch settingKey="EstTaxiWaitTime" label="Est. Taxi Wait Time" />
+                    <SettingSwitch settingKey="FlightInformation" label="Flight Information" />
+                    <SettingSwitch settingKey="AlertBulletins" label="Alerts Bulletin" />
                     <SettingSwitch settingKey="est-taxi-queue" label="Est. Taxi Queue & Taxi Supply" />
                 </div>
             </CardContent>

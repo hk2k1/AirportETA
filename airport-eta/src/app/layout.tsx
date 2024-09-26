@@ -64,7 +64,7 @@ export default function RootLayout({
         )}
       >
         <NextTopLoader color="#2299DD" easing="ease" height={5} showSpinner={false} />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Toaster position="bottom-center" reverseOrder={false} />
           {children}
         </ThemeProvider>

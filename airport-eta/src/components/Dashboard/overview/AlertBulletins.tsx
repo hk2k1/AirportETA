@@ -36,19 +36,18 @@ const getAlertVariant = (type: string) => {
 
 export function AlertBulletins() {
   return (
-    <Disable settingKey="alert-bulletins">
-      <Card>
-        <CardHeader>
-          <CardTitle>Alert Bulletins</CardTitle>
+    <Disable settingKey="alert-bulletin">
+      <Card className="h-full">
+        <CardHeader className="p-2">
+          <CardTitle className="text-sm font-medium">Alert Bulletins</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="p-2 space-y-1">
           {mockAlerts.map((alert) => (
-            <Alert key={alert.id} variant={getAlertVariant(alert.type)}>
+            <Alert key={alert.id} variant={getAlertVariant(alert.type)} className="py-1 px-2">
               {getAlertIcon(alert.type)}
-              <AlertTitle className="ml-2">{alert.title}</AlertTitle>
-              <AlertDescription className="ml-6">
+              <AlertTitle className="ml-2 text-xs">{alert.title}</AlertTitle>
+              <AlertDescription className="ml-4 text-xs">
                 {alert.message}
-                <div className="text-xs text-muted-foreground mt-1">{alert.timestamp}</div>
               </AlertDescription>
             </Alert>
           ))}

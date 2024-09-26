@@ -1,4 +1,4 @@
-import Header from "@/components/Dashboard/layout/header";
+// import Header from "@/components/Dashboard/layout/header";
 import Sidebar from "@/components/Dashboard/layout/sidebar";
 import { getAuthUser } from "@/utils/supabase-server";
 // import { ScrollArea } from "@/components/ui/scroll-area";
@@ -33,7 +33,7 @@ export default async function DashboardLayout({
       font.className,
       font.variable
     )}>
-        <Header />
+        {/* <Header /> */}
         <Toaster />
         {children}
       </div>

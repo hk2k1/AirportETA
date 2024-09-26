@@ -1,10 +1,14 @@
-// components/Dashboard/overview/EstTaxiWaitTime.tsx
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Disable } from '@/components/Dashboard/Disable';
 
-const terminals = [1, 2, 3, 4];
+const terminalData = [
+  { id: 1, waitTime: 8 },
+  { id: 2, waitTime: 12 },
+  { id: 3, waitTime: 18 },
+  { id: 4, waitTime: 5 },
+];
 
 const getWaitTimeColor = (time: number) => {
   if (time > 15) return 'bg-red-500';
@@ -21,33 +25,32 @@ const getWaitTimeLabel = (time: number) => {
 export function EstTaxiWaitTime() {
   return (
     <Disable settingKey="est-taxi-wait-time">
-      <Card>
-        <CardHeader>
-          <CardTitle>Est. Taxi Wait Time</CardTitle>
+      <Card className="h-full">
+        <CardHeader className="p-2">
+          <CardTitle className="text-sm font-medium">Est. Taxi Wait Time</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-2">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Terminal</TableHead>
-                <TableHead>Wait Time</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="py-1 px-2 text-xs">Term</TableHead>
+                <TableHead className="py-1 px-2 text-xs">Wait</TableHead>
+                <TableHead className="py-1 px-2 text-xs">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {terminals.map((terminal) => {
-                const waitTime = Math.floor(Math.random() * 20) + 1;
-                const colorClass = getWaitTimeColor(waitTime);
-                const label = getWaitTimeLabel(waitTime);
+              {terminalData.map((terminal) => {
+                const colorClass = getWaitTimeColor(terminal.waitTime);
+                const label = getWaitTimeLabel(terminal.waitTime);
                 return (
-                  <TableRow key={terminal}>
-                    <TableCell className="font-medium">Terminal {terminal}</TableCell>
-                    <TableCell>
-                      <div className={`inline-block px-2 py-1 rounded ${colorClass} text-white font-semibold`}>
-                        {waitTime} min
+                  <TableRow key={terminal.id}>
+                    <TableCell className="py-1 px-2 text-xs font-medium">T{terminal.id}</TableCell>
+                    <TableCell className="py-1 px-2 text-xs">
+                      <div className={`inline-block px-1 rounded ${colorClass} text-white text-xs`}>
+                        {terminal.waitTime}m
                       </div>
                     </TableCell>
-                    <TableCell>{label}</TableCell>
+                    <TableCell className="py-1 px-2 text-xs">{label}</TableCell>
                   </TableRow>
                 );
               })}

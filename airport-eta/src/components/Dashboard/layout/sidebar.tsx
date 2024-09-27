@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client"
 import { useRouter } from "next/navigation"
+import Img from "next/image";
 
 type SidebarProps = {
   className?: string;
@@ -32,20 +33,17 @@ export default function Sidebar({ className }: SidebarProps) {
   return (
     <aside
       className={cn(
-        `relative hidden h-screen flex-col flex-none border-r bg-card transition-[width] duration-500 md:flex`,
+        `relative hidden h-screen flex-col flex-none border-r bg-gradient-to-b from-sidebarstart to-sidebarend text-white active:text-black transition-[width] duration-500 md:flex`,
         !isMinimized ? "w-60" : "w-[72px]",
         className
       )}
     >
-      <div className="hidden p-5 pt-10 pl-5 lg:block">
-        <Link href={"/"} className="hidden items-center space-x-2 md:flex">
-          <Icons.logo />
-          {!isMinimized ? (
-            <span className="mr-2 truncate">{siteConfig.name}</span>
-          ) : (
-            ""
-          )}
-        </Link>
+      <div className="hidden p-5 pt-10 lg:block">
+        <div className="flex justify-center items-center">
+          <Link href={"/"} className="flex items-center space-x-2">
+            <Img src="/logo_white.svg" alt="logo" width={100} height={100} className="mx-auto" />
+          </Link>
+        </div>
       </div>
       <Icons.chevronLeft
         className={cn(
@@ -65,7 +63,7 @@ export default function Sidebar({ className }: SidebarProps) {
         <Button
           variant="outline"
           className={cn(
-            "w-full justify-start",
+            "w-full justify-start text-black hover:bg-black hover:text-white",
             isMinimized && "px-2"
           )}
           onClick={handleSignOut}

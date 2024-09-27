@@ -19,6 +19,9 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			sidebar: 'var(--sidebar)',
+			sidebarstart: '#901d92',
+        	sidebarend: '#864492',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

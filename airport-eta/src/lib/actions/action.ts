@@ -1,3 +1,4 @@
+// src/lib/actions/action.ts
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
@@ -8,12 +9,34 @@ import { headers } from "next/headers";
 import { Provider } from "@supabase/supabase-js";
 import { getURL } from "@/utils/helper";
 
+// export const emailLogin = async (values: z.infer<typeof userAuthSchema>) => {
+//   const validatedData = userAuthSchema.safeParse(values);
+//   if (!validatedData.success) {
+//     return { error: "Invalid Fields!" };
+//   }
+//   const {email, password } = validatedData.data;
+//   const supabase = createClient();
+
+//   const { error } = await supabase.auth.signInWithPassword({
+//     email,
+//     password,
+//   });
+
+//   if (error) {
+//     return {error: error.message};
+//     // return encodedRedirect("error", "/login", error.message);
+//     // return encodedRedirect("error", "/sign-in", error.message);
+//   }
+  
+//   return redirect("/dashboard");
+// };
+
 export const emailLogin = async (values: z.infer<typeof userAuthSchema>) => {
   const validatedData = userAuthSchema.safeParse(values);
   if (!validatedData.success) {
     return { error: "Invalid Fields!" };
   }
-  const {email, password } = validatedData.data;
+  const { email, password } = validatedData.data;
   const supabase = createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -22,12 +45,11 @@ export const emailLogin = async (values: z.infer<typeof userAuthSchema>) => {
   });
 
   if (error) {
-    return {error: error.message};
-    // return encodedRedirect("error", "/login", error.message);
-    // return encodedRedirect("error", "/sign-in", error.message);
+    return { error: error.message };
   }
   
-  return redirect("/dashboard");
+  // Instead of redirecting immediately, return a success status
+  return { success: true, requiresTwoFactor: true };
 };
 
 export const signup = async (values: z.infer<typeof userAuthSchema>) => {
@@ -74,16 +96,17 @@ export async function getAuthUser() {
   }
 }
 
-export async function oAuthSignIn(provider: Provider){
+export async function oAuthSignIn(provider: Provider, options: Record<string, string>) {
   if (!provider) {
     return redirect('/login?message=No provider selected')
-}
+  }
 
-const supabase = createClient();
+  const supabase = createClient();
   const redirectUrl = getURL("/auth/callback")
   const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
+          scopes: options.scopes,
           redirectTo: redirectUrl,
       }
   })
@@ -91,6 +114,7 @@ const supabase = createClient();
   if (error) {
       redirect('/login?message=Could not authenticate user')
   }
+  console.log(data)
 
   return redirect(data.url)
 }

@@ -9,7 +9,7 @@ import DraggableMap from "@/components/Dashboard/maps/DraggableMap"
 import { dashboardConfig } from "@/config/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 import { Icons } from "@/components/icons";
 
 interface MapConfig {

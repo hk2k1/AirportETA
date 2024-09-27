@@ -14,13 +14,15 @@ type OAuthProvider = {
 
 interface OAuthSignInProps {
   provider: OAuthProvider;
+  options?: Record<string, string>;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 const OAuthSignIn: React.FC<OAuthSignInProps> = ({ 
-  provider, 
+  provider,
+  options, 
   isLoading, 
   setIsLoading, 
   className 
@@ -28,7 +30,7 @@ const OAuthSignIn: React.FC<OAuthSignInProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await oAuthSignIn(provider.name);
+    await oAuthSignIn(provider.name, options || {});
     setIsLoading(false);
   };
 

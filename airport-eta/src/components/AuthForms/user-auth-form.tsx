@@ -1,3 +1,4 @@
+// src/components/AuthForms/user-auth-form.tsx
 "use client"
 
 import * as React from "react"
@@ -16,25 +17,36 @@ import { Icons } from "@/components/icons"
 import { userAuthSchema } from "@/lib/validations/auth"
 import toast from "react-hot-toast"
 // import { useTransition } from "react"
-import OAuthSignIn from "./oauth-signin"
+// import OAuthSignIn from "./oauth-signin"
+
+import { TwoFactorAuthModal } from "@/components/two-factor-auth-modal"
+import { useRouter } from "next/navigation"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type UserFormValue = z.infer<typeof userAuthSchema>;
 
-const oAuthProviders = [
-  {
-    name: 'github' as const,
-    displayName: 'GitHub',
-    icon: 'gitHub' as keyof typeof Icons
-  },
-  {
-    name: 'google' as const,
-    displayName: 'Google',
-    icon: 'google' as keyof typeof Icons
-  }
-  // Add more providers here as needed
-];
+// const oAuthProviders = [
+//   {
+//     name: 'github' as const,
+//     displayName: 'GitHub',
+//     icon: 'gitHub' as keyof typeof Icons
+//   },
+//   {
+//     name: 'google' as const,
+//     displayName: 'Google',
+//     icon: 'google' as keyof typeof Icons
+//   },
+//   {
+//     name: 'keycloak' as const,
+//     displayName: 'Keycloak',
+//     icon: 'sso' as keyof typeof Icons,
+//     options: {
+//       scopes: 'openid',
+//     }
+//   }
+//   // Add more providers here as needed
+// ];
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { 
@@ -46,20 +58,41 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isOAuthLoading, setIsOAuthLoading] = React.useState<boolean>(false)
   // const [isPending, startTransition] = useTransition();
 
+  // const onSubmit = async (values: UserFormValue) => {
+  //   setIsLoading(true)
+  //   // console.log("values", values)
+  //   emailLogin(values).then((data: string | { error: string }) => {
+  //     if (typeof data === "object" && "error" in data) {
+  //       toast.error(data.error);
+  //       return;
+  //     }
+  //     toast.success("logged in");
+  //   });
+  //   setIsLoading(false)
+  // }
+
+  const [showTwoFactor, setShowTwoFactor] = React.useState<boolean>(false)
+  const router = useRouter()
+  
   const onSubmit = async (values: UserFormValue) => {
     setIsLoading(true)
-    // console.log("values", values)
-    emailLogin(values).then((data: string | { error: string }) => {
-      if (typeof data === "object" && "error" in data) {
-        toast.error(data.error);
-        return;
-      }
-      toast.success("logged in");
-    });
+    const result = await emailLogin(values);
+    if ('error' in result) {
+      toast.error(result.error || "An unknown error occurred");
+    } else if (result.success && result.requiresTwoFactor) {
+      setShowTwoFactor(true);
+    }
     setIsLoading(false)
+  }
+
+  const handleTwoFactorClose = () => {
+    setShowTwoFactor(false);
+    toast.success("Logged in successfully");
+    router.push("/dashboard");
   }
 
   return (
@@ -108,7 +141,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </button>
         </div>
       </form>
-      <div className="relative">
+      <TwoFactorAuthModal isOpen={showTwoFactor} onClose={handleTwoFactorClose} />
+      {/* <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -128,12 +162,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <OAuthSignIn
             key={provider.name}
             provider={provider}
+            options={provider.options}
             isLoading={isOAuthLoading}
             setIsLoading={setIsOAuthLoading}
             className="w-full"
           />
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

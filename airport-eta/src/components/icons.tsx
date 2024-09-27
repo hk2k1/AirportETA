@@ -36,11 +36,11 @@ import {
     TriangleAlertIcon,
     CircleAlertIcon,
     MapPin,
-    
+    MapPinned,
+    EarthLock,
   } from "lucide-react"
 
   import { FaGoogle } from "react-icons/fa";
-import { map } from "zod";
   
   export type Icon = typeof LucideIcon
   
@@ -78,6 +78,8 @@ import { map } from "zod";
     triangleAlertIcon: TriangleAlertIcon,
     circleAlertIcon: CircleAlertIcon,
     mapPin: MapPin,
+    maps: MapPinned,
+    sso: EarthLock,
     gitHub: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

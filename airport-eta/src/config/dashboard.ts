@@ -22,7 +22,7 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: "Taxi Maps",
       href: "/dashboard/taxi",
-      icon: "taxi",
+      icon: "maps",
     },
     {
       title: "Dashboard Settings",
@@ -48,6 +48,11 @@ export const dashboardConfig: DashboardConfig = {
       title: "System Parameters",
       href: "/dashboard/system",
       icon: "info",
+    },
+    {
+      title: "Cabs@Changi Admin",
+      href: "/dashboard/cabs",
+      icon: "taxi",
     },
   ],
 }
